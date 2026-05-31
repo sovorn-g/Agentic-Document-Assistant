@@ -1,7 +1,7 @@
 import re
 import json
 import config
-from utils import clear_directory_contents
+from utils.files import clear_directory_contents
 from pathlib import Path
 from typing import List, Dict
 

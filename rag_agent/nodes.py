@@ -1,11 +1,24 @@
 from typing import Literal, Set
+
+import tiktoken
 from langchain_core.messages import SystemMessage, HumanMessage, RemoveMessage, AIMessage, ToolMessage
 from langgraph.types import Command
 from .graph_state import State, AgentState
 from .schemas import QueryAnalysis
 from .prompts import *
-from utils import estimate_context_tokens
 from config import BASE_TOKEN_THRESHOLD, TOKEN_GROWTH_FACTOR
+
+
+def estimate_context_tokens(messages: list) -> int:
+    try:
+        encoding = tiktoken.encoding_for_model("gpt-4")
+    except Exception:
+        encoding = tiktoken.get_encoding("cl100k_base")
+    return sum(
+        len(encoding.encode(str(msg.content)))
+        for msg in messages
+        if hasattr(msg, "content") and msg.content
+    )
 
 def summarize_history(state: State, llm):
     existing_summary = state.get("conversation_summary", "")

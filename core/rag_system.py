@@ -4,7 +4,7 @@ import config
 from db.vector_db_manager import VectorDbManager
 from db.parent_store_manager import ParentStoreManager
 from db.sqlite_store import SQLiteStore
-from document_chunker import DocumentChuncker
+from core.chunking import DocumentChunker
 from rag_agent.tools import ToolFactory
 from rag_agent.graph import create_agent_graph
 from core.observability import Observability
@@ -15,7 +15,7 @@ class RAGSystem:
         self.collection_name = collection_name
         self.vector_db = VectorDbManager()
         self.store = SQLiteStore()
-        self.chunker = DocumentChuncker()
+        self.chunker = DocumentChunker()
         self.observability = Observability()
         self.llm = None
         self.collection = None

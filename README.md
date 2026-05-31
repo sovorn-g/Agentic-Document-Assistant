@@ -66,7 +66,7 @@ http://localhost:7860
 For routine checks, use the venv and frontend build directly:
 
 ```bash
-./.venv/bin/python -m py_compile server.py core/document_manager.py core/rag_system.py db/vector_db_manager.py utils.py
+./.venv/bin/python -m py_compile app.py api/server.py core/document_manager.py core/rag_system.py core/chunking.py db/vector_db_manager.py utils/files.py utils/pdf.py
 cd frontend && npm run build
 ```
 
@@ -137,16 +137,21 @@ The dense model is the main local embedding cost. BM25 sparse encoding is usuall
 | Path | Purpose |
 |------|---------|
 | `app.py` | Venv entry point; launches FastAPI and serves the React frontend |
-| `server.py` | FastAPI API, upload/delete/chat endpoints, static frontend serving |
 | `config.py` | Storage, model, retrieval, memory, graph, and chunking settings |
+| `api/` | FastAPI API surface and frontend static serving |
 | `requirements.txt` | Python dependencies |
 | `Dockerfile` | Optional container image |
 | `docker-compose.yml` | Optional Compose runner |
 | `.dockerignore` | Prevents `.venv/` and runtime storage from entering Docker builds |
 | `.env.example` | Example environment settings |
-| `utils.py` | PDF-to-Markdown conversion, directory cleanup, token estimation |
-| `document_chunker.py` | Parent/child Markdown chunking and metadata assignment |
+| `utils/` | Shared file and PDF helpers |
 | `frontend/` | React 19 + TypeScript + Vite UI |
+
+### API
+
+| Path | Purpose |
+|------|---------|
+| `api/server.py` | FastAPI API, upload/delete/chat endpoints, static frontend serving |
 
 ### Core
 
@@ -154,8 +159,16 @@ The dense model is the main local embedding cost. BM25 sparse encoding is usuall
 |------|---------|
 | `core/rag_system.py` | Initializes SQLite, Qdrant, embeddings, selected LLM provider, and cached LangGraph agents |
 | `core/document_manager.py` | Project-scoped upload, conversion, indexing, deletion, and resource cache invalidation |
+| `core/chunking.py` | Parent/child Markdown chunking and metadata assignment |
 | `core/chat_interface.py` | SQLite-backed chat history, memory compaction, and graph execution |
 | `core/observability.py` | Optional Langfuse callback setup |
+
+### Utilities
+
+| Path | Purpose |
+|------|---------|
+| `utils/files.py` | Directory cleanup helpers |
+| `utils/pdf.py` | PDF-to-Markdown conversion helpers |
 
 ### Storage Layer
 

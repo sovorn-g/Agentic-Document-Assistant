@@ -4,7 +4,7 @@ import config
 from pathlib import Path
 from langchain_text_splitters import MarkdownHeaderTextSplitter, RecursiveCharacterTextSplitter
 
-class DocumentChuncker:
+class DocumentChunker:
     def __init__(self):
         self.__parent_splitter = MarkdownHeaderTextSplitter(
             headers_to_split_on=config.HEADERS_TO_SPLIT_ON, 

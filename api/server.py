@@ -1,6 +1,5 @@
 import json
 import logging
-import os
 import shutil
 import tempfile
 from pathlib import Path
@@ -8,7 +7,8 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -207,7 +207,7 @@ def stream_chat(project_id: str, session_id: str, message: str):
     return StreamingResponse(generate(), media_type="text/event-stream")
 
 
-FRONTEND_DIST = Path(__file__).parent / "frontend" / "dist"
+FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
 
 if FRONTEND_DIST.exists():
     app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")

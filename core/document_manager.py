@@ -2,7 +2,8 @@ from pathlib import Path
 import shutil
 import uuid
 
-from utils import clear_directory_contents, pdf_to_markdown
+from utils.files import clear_directory_contents
+from utils.pdf import pdf_to_markdown
 
 
 class DocumentManager:
