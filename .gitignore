@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+storage/
+markdown_docs/
+parent_store/
+qdrant_db/
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo

@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        # Keep this as 1 for the default local Ollama container path.
+        # Set INSTALL_OLLAMA=0 when using hosted providers such as DeepSeek/OpenAI/Gemini.
+        INSTALL_OLLAMA: ${INSTALL_OLLAMA:-1}
+    image: agentic-document-assistant:local
+    container_name: agentic-document-assistant
+    ports:
+      - "${APP_PORT:-7860}:7860"
+    environment:
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      LLM_MODEL: ${LLM_MODEL:-qwen3:4b-instruct-2507-q4_K_M}
+      LLM_TEMPERATURE: ${LLM_TEMPERATURE:-0}
+      LLM_DISABLE_THINKING: ${LLM_DISABLE_THINKING:-true}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://localhost:11434}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      LANGFUSE_ENABLED: ${LANGFUSE_ENABLED:-false}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      LANGFUSE_BASE_URL: ${LANGFUSE_BASE_URL:-http://localhost:3000}
+    volumes:
+      - ./storage:/app/storage
+      - ollama-data:/home/user/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama-data:

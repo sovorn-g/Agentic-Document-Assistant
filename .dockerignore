@@ -1,0 +1,12 @@
+.git/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+storage/
+markdown_docs/
+parent_store/
+qdrant_db/
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
